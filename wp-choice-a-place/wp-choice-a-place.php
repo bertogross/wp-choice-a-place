@@ -1,31 +1,53 @@
 <?php
 /**
-* Plugin Name: Choice a Place
-* Plugin URI: https://github.com/bertogross/wp-plugin-choice-a-place
-* Description: Full screen: select a place and redirect.
-* Author: Daniel Gross
-* Version: 1.0.0
-* Author URI: https://danielgross.dev/
+Plugin Name: Choice a Place
+Plugin URI: https://github.com/bertogross/wp-plugin-choice-a-place
+Description: Full screen: select a place and redirect.
+Author: Daniel Gross
+Version: 1.0.1
+Author URI: https://danielgross.dev/
+License: GPLv2 or later
 */
 
+/*
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+*/
+
+
 if(!defined('ABSPATH')) exit;//Exit if accessed directly
+
+define( 'WCYP_VERSION', '1.0.1' );
+
 
 /**
 * Admin Scripts
 */
 function wcyp_admin_scripts() {
-  wp_register_style( 'wcyp-admin-style', plugins_url('css/admin.css',__FILE__));
+  wp_register_style( 'wcyp-admin-style', plugins_url('css/admin.css',__FILE__), WCYP_VERSION, 'all');
   wp_enqueue_style( 'wcyp-admin-style' );
-  wp_register_script( 'wcyp-admin-js', plugins_url('js/admin.js',__FILE__), array() );
+  wp_register_script( 'wcyp-admin-js', plugins_url('js/admin.js',__FILE__), array(), WCYP_VERSION );
   wp_enqueue_script( 'wcyp-admin-js' );
 }
 add_action('admin_enqueue_scripts', 'wcyp_admin_scripts');
+
 
 /**
 * Front Scripts
 */
 function wcyp_front_scripts() {
-  wp_register_script( 'wcyp-front-js', plugins_url('js/front.js',__FILE__), array() );
+  wp_register_script( 'wcyp-front-js', plugins_url('js/front.js',__FILE__), array(), WCYP_VERSION );
   wp_enqueue_script( 'wcyp-front-js' );
 }
 add_action( 'wp_enqueue_scripts', 'wcyp_front_scripts' );
@@ -65,9 +87,9 @@ function wcyp_front_footer_html() {
       echo '<div id="wcyp-toggle">
         <div class="wcyp-wrap">
           <form>
-            <label class="wcyp-label" for="wcyp-select">Escolha sua localidade</label>
+            <label class="wcyp-label" for="wcyp-select">'.get_option('wcyp_text_label').'</label>
             <select id="wcyp-select" class="wcyp-select">
-              <option selected disabled>Qual sua região?</option>
+              <option selected disabled>'.get_option('wcyp_text_select').'</option>
               '.$wcyp_populate_options.'
             </select>
           </form>
@@ -78,6 +100,7 @@ function wcyp_front_footer_html() {
 
 }
 add_action( 'wp_footer', 'wcyp_front_footer_html', 0 );
+
 
 /**
 * Add a new top level menu link to the Admin Control Panel
@@ -96,6 +119,7 @@ function wcyp_admin_menu(){
 }
 add_action('admin_menu','wcyp_admin_menu');
 
+
 /**
 * Function to display in admin page
 */
@@ -106,6 +130,8 @@ if ( !function_exists( 'wcyp_admin_page' ) ):
       //update options
       update_option('wcyp_place', array_filter( $_POST['wcyp_place'] ) );
       update_option('wcyp_custom_css', $_POST['wcyp_custom_css'] );        
+      update_option('wcyp_text_label', $_POST['wcyp_text_label'] );        
+      update_option('wcyp_text_select', $_POST['wcyp_text_select'] );        
       ?>
         <div id="setting-error-settings_updated" class="notice notice-success settings-error is-dismissible">
           <p><strong>Settings have been save</strong></p>
@@ -182,6 +208,22 @@ if ( !function_exists( 'wcyp_admin_page' ) ):
                 </tbody>
               </table>
 
+              <hr>
+        
+              <h2>Custom Text</h2>
+              
+              <table class="form-table" style="width: auto">
+                <tbody>
+                  <tr valign="top">
+                    <th scope="row">Label</th>
+                    <td><input type="url" class="regular-text" name="wcyp_text_label" maxlength="200" value="<?php echo (get_option('wcyp_text_label') != '') ? get_option('wcyp_text_label') : "Choose your location";?>"></td>
+                  </tr>
+                  <tr valign="top">
+                    <th scope="row">Select</th>
+                    <td><input type="url" class="regular-text" name="wcyp_text_select" maxlength="200" value="<?php echo (get_option('wcyp_text_select') != '') ? get_option('wcyp_text_select') : "What's your region?";?>"></td>
+                  </tr>
+                </tbody>
+              </table>              
               <hr>
         
               <h2>Custom CSS</h2>
