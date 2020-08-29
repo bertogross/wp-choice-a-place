@@ -3,17 +3,20 @@ document.addEventListener("DOMContentLoaded", function() {
   /**
   * Function Click Event
   */
-  if(document.querySelector(".wcyp-action")){
-    document.querySelector(".wcyp-action").addEventListener("click", function(){
-      var wcypToggleElement = document.getElementById("wcyp-toggle");
-      setCookie('wcypActionToggle', 'show', 1);
+  if(document.getElementById("wcyp-toggle")){
+    for (let i = 0; i < document.getElementsByClassName("wcyp-action").length; i++){
+      document.getElementsByClassName("wcyp-action")[i].addEventListener("click", function(){
+        var wcypToggleElement = document.getElementById("wcyp-toggle");
+        setCookie('wcypActionToggle', 'show', 1);
 
-      if(wcypToggleElement.classList.contains("hide")){
-        wcypToggleElement.classList.remove("hide");
-      }
-      wcypToggleElement.classList.add("show");
+        if(wcypToggleElement.classList.contains("hide")){
+          wcypToggleElement.classList.remove("hide");
+        }
+        wcypToggleElement.classList.add("show");
 
-    }, false);
+      }, false);      
+    }
+
   }
 
 

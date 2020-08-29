@@ -65,9 +65,9 @@ function wcyp_front_footer_html() {
       echo '<div id="wcyp-toggle">
         <div class="wcyp-wrap">
           <form>
-            <label class="wcyp-label" for="wcyp-select">Escolha sua cidade</label>
+            <label class="wcyp-label" for="wcyp-select">Escolha sua localidade</label>
             <select id="wcyp-select" class="wcyp-select">
-              <option selected disabled>Qual sua cidade?</option>
+              <option selected disabled>Qual sua região?</option>
               '.$wcyp_populate_options.'
             </select>
           </form>
@@ -101,7 +101,6 @@ add_action('admin_menu','wcyp_admin_menu');
 */
 if ( !function_exists( 'wcyp_admin_page' ) ):
   function wcyp_admin_page(){
-    $wcyp_options = maybe_unserialize( get_option("wcyp_place") );
 
     if(array_key_exists('submit', $_POST)){
       //update options
@@ -113,6 +112,7 @@ if ( !function_exists( 'wcyp_admin_page' ) ):
         </div>
       <?php    
     }
+    $wcyp_options = maybe_unserialize( get_option("wcyp_place") );
     ?>
     <div class="wrap">
 
@@ -202,7 +202,7 @@ if ( !function_exists( 'wcyp_admin_page' ) ):
   align-items: center;
 }
 #wcyp-toggle .wcyp-wrap{
-  width: 70%; 
+  width: 50%; 
   margin: 0 auto;
   min-width:300px;
 }
@@ -210,9 +210,12 @@ if ( !function_exists( 'wcyp_admin_page' ) ):
   margin-right: 30px;
   text-transform: uppercase;
   color: #FFF;
+  float:left;
+  width:auto;
 }
 #wcyp-toggle .wcyp-select{
-  padding: 0.1em 70px 1px 0em; 
+  font-size: 20px;
+  padding: 0.1em 10px 1px 0em; 
   border: none; 
   border-radius: 0px; 
   border-bottom: 1px solid #ffe4d3; 
