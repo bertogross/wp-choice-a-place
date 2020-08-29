@@ -216,11 +216,11 @@ if ( !function_exists( 'wcyp_admin_page' ) ):
                 <tbody>
                   <tr valign="top">
                     <th scope="row">Label</th>
-                    <td><input type="url" class="regular-text" name="wcyp_text_label" maxlength="200" value="<?php echo (get_option('wcyp_text_label') != '') ? get_option('wcyp_text_label') : "Choose your location";?>"></td>
+                    <td><input type="text" class="regular-text" name="wcyp_text_label" maxlength="200" value="<?php echo (get_option('wcyp_text_label') != '') ? get_option('wcyp_text_label') : "Choose your location";?>" required></td>
                   </tr>
                   <tr valign="top">
                     <th scope="row">Select</th>
-                    <td><input type="url" class="regular-text" name="wcyp_text_select" maxlength="200" value="<?php echo (get_option('wcyp_text_select') != '') ? get_option('wcyp_text_select') : "What's your region?";?>"></td>
+                    <td><input type="text" class="regular-text" name="wcyp_text_select" maxlength="200" value="<?php echo (get_option('wcyp_text_select') != '') ? get_option('wcyp_text_select') : "What's your region?";?>" required></td>
                   </tr>
                 </tbody>
               </table>              
