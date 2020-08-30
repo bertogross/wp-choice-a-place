@@ -183,7 +183,7 @@ if ( !function_exists( 'wcyp_admin_page' ) ):
               <table class="form-table striped"  style="width: auto">
                 <tbody>
                   <?php
-                  if(is_array($wcyp_options)){
+                  if( isset($wcyp_options) && is_array($wcyp_options) ){
                     array_filter($wcyp_options);
                     asort($wcyp_options);
                     $wcyp_index = 0;
@@ -193,10 +193,10 @@ if ( !function_exists( 'wcyp_admin_page' ) ):
                         ?>
                         <tr valign="top">
                           <td>
-                            <input type="text" class="regular-text" name="wcyp_place[<?php echo $wcyp_index;?>][locale]" maxlength="200" value="<?php echo $wcyp_value["locale"];?>" placeholder="City/State" required>
+                            <input type="text" class="regular-text" name="wcyp_place[<?php echo $wcyp_index;?>][locale]" maxlength="200" value="<?php echo isset($wcyp_value["locale"]) ? $wcyp_value["locale"] : '';?>" placeholder="City/State" required>
                           </td>
                           <td>
-                            <input type="url" class="regular-text" name="wcyp_place[<?php echo $wcyp_index;?>][url]" maxlength="200" value="<?php echo $wcyp_value["url"];?>" placeholder="https://your-domain.com/place" required>
+                            <input type="url" class="regular-text" name="wcyp_place[<?php echo $wcyp_index;?>][url]" maxlength="200" value="<?php echo isset($wcyp_value["url"]) ? $wcyp_value["url"] : '';?>" placeholder="https://your-domain.com/place" required>
                           </td>
                           <td width="20"><button type="button" data-index="<?php echo $wcyp_index;?>" class="button button-danger" title="Remove" onClick="jQuery(this).closest('tr').remove();">X</button></td>
                         </tr>
@@ -220,7 +220,7 @@ if ( !function_exists( 'wcyp_admin_page' ) ):
                   </tr>
                   <tr valign="top">
                     <th scope="row">Select</th>
-                    <td><input type="text" class="regular-text" name="wcyp_text_select" maxlength="200" value="<?php echo (get_option('wcyp_text_select') != '') ? get_option('wcyp_text_select') : "What's your region?";?>" required></td>
+                    <td><input type="text" class="regular-text" name="wcyp_text_select" maxlength="200" value="<?php echo (get_option('wcyp_text_select') != '') ? get_option('wcyp_text_select') : "Your region?";?>" required></td>
                   </tr>
                 </tbody>
               </table>              
@@ -228,7 +228,7 @@ if ( !function_exists( 'wcyp_admin_page' ) ):
         
               <h2>Custom CSS</h2>
               
-              <textarea rows="10" name="wcyp_custom_css" class="regular-text" style="width: 100%"><?php echo (get_option('wcyp_custom_css') != '') ? get_option('wcyp_custom_css') : '#wcyp-toggle{
+              <textarea rows="15" name="wcyp_custom_css" class="regular-text" style="width: 100%"><?php echo (get_option('wcyp_custom_css') != '') ? get_option('wcyp_custom_css') : '#wcyp-toggle{
   display: none;
 }
 #wcyp-toggle.show{
@@ -271,21 +271,26 @@ if ( !function_exists( 'wcyp_admin_page' ) ):
 }
 #wcyp-toggle .wcyp-select option{
   color:#333;
-}';?></textarea>
+}';?>
+              </textarea>
               
             </form>
 
             <hr>
 
             <fieldset>
+              
               <legend><h2>Instructions</h2></legend>
+              
               <p class="description">
                 Insert on your page any button or element that contains the class "wcyp-action" <br>
                 Example: 
                 <pre><code>&lt;button type=&quot;button&quot; class=&quot;<strong>wcyp-action</strong>&quot;&gt;Change the place&lt;/button&gt;</code></pre>
               </p>
-              <p>When the visitor clicks, the select with the options will be displayed</p>
-              <p><strong>Basically</strong>:<br>In the front, options will be displayed by default until the visitor chooses. The value of the choice will be stored in cookies.</p>
+        
+              <p>When the visitor clicks the select with the options will be displayed</p>
+              <p><strong>Basically</strong>:<br>In the front, options will be displayed by default until the visitor chooses.</p>
+        
             </fieldset>
 
           <?php
